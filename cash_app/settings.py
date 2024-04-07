@@ -13,7 +13,12 @@ import dj_database_url
 from pathlib import Path
 import os
 
+import environ
+import load_dotenv
+load_dotenv.load_dotenv()
 
+env = environ.Env()
+environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,13 +29,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-ae5v7v_k=_c)_f29mo=kask@o&lc-ig0+jm($fwr8648r)i6u!'
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-os.environ.get("DEBUG",'False').lower() == "true"   
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
-database_url = os.environ.get("DATABASE_URL")
+DEBUG = os.environ.get('DEBUG')  
+# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+# database_url = os.environ.get("DATABASE_URL")
 # ALLOWED_HOSTS = []
 
 
@@ -80,18 +85,18 @@ WSGI_APPLICATION = 'cash_app.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': BASE_DIR/'db.sqlite3'
-        # 'NAME': 'all_in_one',
-        # 'USER': 'pritam',
-        # 'PASSWORD': 'yhx9shgRzcvzhrC9XRt8uBuj0Ms63ZJL',
-        # 'HOSTNAME': 'dpg-co91ke5jm4es73anr9k0-a',
-        # 'HOST': dj_database_url.parse(url="postgres://pritam:yhx9shgRzcvzhrC9XRt8uBuj0Ms63ZJL@dpg-co91ke5jm4es73anr9k0-a.oregon-postgres.render.com/all_in_one"),
-        # 'PORT': '5432',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': BASE_DIR/'db.sqlite3'
+    #     # 'NAME': 'all_in_one',
+    #     # 'USER': 'pritam',
+    #     # 'PASSWORD': 'yhx9shgRzcvzhrC9XRt8uBuj0Ms63ZJL',
+    #     # 'HOSTNAME': 'dpg-co91ke5jm4es73anr9k0-a',
+    #     # 'HOST': dj_database_url.parse(url="postgres://pritam:yhx9shgRzcvzhrC9XRt8uBuj0Ms63ZJL@dpg-co91ke5jm4es73anr9k0-a.oregon-postgres.render.com/all_in_one"),
+    #     # 'PORT': '5432',
+    # }
 }
-DATABASES['default'] = dj_database_url.parse(url=database_url)
+DATABASES['default'] = dj_database_url.parse(os.environ.get('database_url'))
 
 
 
